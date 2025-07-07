@@ -7,7 +7,7 @@
 #include "PickupInterface.generated.h"
 
 // This class does not need to be modified.
-UINTERFACE()
+UINTERFACE(MinimalAPI)
 class UPickupInterface : public UInterface
 {
 	GENERATED_BODY()
@@ -22,4 +22,7 @@ class Q_API IPickupInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
+	virtual void SetOverlappingItem(class AItem* Item);
+	virtual void AddSouls(class ASoul* Soul);
+	virtual void AddGold(class ATreasure* Treasure);
 };
