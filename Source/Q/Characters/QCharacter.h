@@ -15,7 +15,7 @@ class AItem;
 class ASoul;
 class ATreasure;
 class UAnimMontage;
-class USlashOverlay;
+class UQOverlay;
 
 UCLASS()
 class Q_API AQCharacter : public AQCharacterBase, public IPickupInterface
@@ -23,7 +23,7 @@ class Q_API AQCharacter : public AQCharacterBase, public IPickupInterface
 	GENERATED_BODY()
 
 public:
-	ASlashCharacter();
+	AQCharacter();
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void Jump() override;

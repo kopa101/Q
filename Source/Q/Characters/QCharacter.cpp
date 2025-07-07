@@ -117,22 +117,22 @@ void AQCharacter::AddSouls(ASoul* Soul)
 
 void AQCharacter::AddGold(ATreasure* Treasure)
 {
-	if (Attributes && SlashOverlay)
+	if (Attributes && QOverlay)
 	{
 		Attributes->AddGold(Treasure->GetGold());
-		SlashOverlay->SetGold(Attributes->GetGold());
+		QOverlay->SetGold(Attributes->GetGold());
 	}
 }
 
-void ASlashCharacter::BeginPlay()
+void AQCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
 	Tags.Add(FName("EngageableTarget"));
-	InitializeSlashOverlay();
+	InitializeQOverlay();
 }
 
-void ASlashCharacter::MoveForward(float Value)
+void AQCharacter::MoveForward(float Value)
 {
 	if (ActionState != EActionState::EAS_Unoccupied) return;
 	if (Controller && (Value != 0.f))
@@ -146,7 +146,7 @@ void ASlashCharacter::MoveForward(float Value)
 	}
 }
 
-void ASlashCharacter::MoveRight(float Value)
+void AQCharacter::MoveRight(float Value)
 {
 	if (ActionState != EActionState::EAS_Unoccupied) return;
 	if (Controller && (Value != 0.f))
@@ -160,17 +160,17 @@ void ASlashCharacter::MoveRight(float Value)
 	}
 }
 
-void ASlashCharacter::Turn(float Value)
+void AQCharacter::Turn(float Value)
 {
 	AddControllerYawInput(Value);
 }
 
-void ASlashCharacter::LookUp(float Value)
+void AQCharacter::LookUp(float Value)
 {
 	AddControllerPitchInput(Value);
 }
 
-void ASlashCharacter::EKeyPressed()
+void AQCharacter::EKeyPressed()
 {
 	AWeapon* OverlappingWeapon = Cast<AWeapon>(OverlappingItem);
 	if (OverlappingWeapon)
@@ -194,7 +194,7 @@ void ASlashCharacter::EKeyPressed()
 	}
 }
 
-void ASlashCharacter::Attack()
+void AQCharacter::Attack()
 {
 	Super::Attack();
 	if (CanAttack())
@@ -204,20 +204,20 @@ void ASlashCharacter::Attack()
 	}
 }
 
-void ASlashCharacter::Dodge()
+void AQCharacter::Dodge()
 {
 	if (IsOccupied() || !HasEnoughStamina()) return;
 
 	PlayDodgeMontage();
 	ActionState = EActionState::EAS_Dodge;
-	if (Attributes && SlashOverlay)
+	if (Attributes && QOverlay)
 	{
 		Attributes->UseStamina(Attributes->GetDodgeCost());
-		SlashOverlay->SetStaminaBarPercent(Attributes->GetStaminaPercent());
+		QOverlay->SetStaminaBarPercent(Attributes->GetStaminaPercent());
 	}
 }
 
-void ASlashCharacter::EquipWeapon(AWeapon* Weapon)
+void AQCharacter::EquipWeapon(AWeapon* Weapon)
 {
 	Weapon->Equip(GetMesh(), FName("RightHandSocket"), this, this);
 	CharacterState = ECharacterState::ECS_EquippedOneHandedWeapon;
@@ -225,52 +225,52 @@ void ASlashCharacter::EquipWeapon(AWeapon* Weapon)
 	EquippedWeapon = Weapon;
 }
 
-void ASlashCharacter::AttackEnd()
+void AQCharacter::AttackEnd()
 {
 	ActionState = EActionState::EAS_Unoccupied;
 }
 
-void ASlashCharacter::DodgeEnd()
+void AQCharacter::DodgeEnd()
 {
 	Super::DodgeEnd();
 
 	ActionState = EActionState::EAS_Unoccupied;
 }
 
-bool ASlashCharacter::CanAttack()
+bool AQCharacter::CanAttack()
 {
 	return ActionState == EActionState::EAS_Unoccupied &&
 		CharacterState != ECharacterState::ECS_Unequipped;
 }
 
-bool ASlashCharacter::CanDisarm()
+bool AQCharacter::CanDisarm()
 {
 	return ActionState == EActionState::EAS_Unoccupied && 
 		CharacterState != ECharacterState::ECS_Unequipped;
 }
 
-bool ASlashCharacter::CanArm()
+bool AQCharacter::CanArm()
 {
 	return ActionState == EActionState::EAS_Unoccupied &&
 		CharacterState == ECharacterState::ECS_Unequipped && 
 		EquippedWeapon;
 }
 
-void ASlashCharacter::Disarm()
+void AQCharacter::Disarm()
 {
 	PlayEquipMontage(FName("Unequip"));
 	CharacterState = ECharacterState::ECS_Unequipped;
 	ActionState = EActionState::EAS_EquippingWeapon;
 }
 
-void ASlashCharacter::Arm()
+void AQCharacter::Arm()
 {
 	PlayEquipMontage(FName("Equip"));
 	CharacterState = ECharacterState::ECS_EquippedOneHandedWeapon;
 	ActionState = EActionState::EAS_EquippingWeapon;
 }
 
-void ASlashCharacter::AttachWeaponToBack()
+void AQCharacter::AttachWeaponToBack()
 {
 	if (EquippedWeapon)
 	{
@@ -278,7 +278,7 @@ void ASlashCharacter::AttachWeaponToBack()
 	}
 }
 
-void ASlashCharacter::AttachWeaponToHand()
+void AQCharacter::AttachWeaponToHand()
 {
 	if (EquippedWeapon)
 	{
@@ -286,7 +286,7 @@ void ASlashCharacter::AttachWeaponToHand()
 	}
 }
 
-void ASlashCharacter::PlayEquipMontage(const FName& SectionName)
+void AQCharacter::PlayEquipMontage(const FName& SectionName)
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	if (AnimInstance && EquipMontage)
@@ -296,7 +296,7 @@ void ASlashCharacter::PlayEquipMontage(const FName& SectionName)
 	}
 }
 
-void ASlashCharacter::Die_Implementation()
+void AQCharacter::Die_Implementation()
 {
 	Super::Die_Implementation();
 
@@ -304,55 +304,55 @@ void ASlashCharacter::Die_Implementation()
 	DisableMeshCollision();
 }
 
-bool ASlashCharacter::HasEnoughStamina()
+bool AQCharacter::HasEnoughStamina()
 {
 	return Attributes && Attributes->GetStamina() > Attributes->GetDodgeCost();
 }
 
-bool ASlashCharacter::IsOccupied()
+bool AQCharacter::IsOccupied()
 {
 	return ActionState != EActionState::EAS_Unoccupied;
 }
 
-void ASlashCharacter::FinishEquipping()
+void AQCharacter::FinishEquipping()
 {
 	ActionState = EActionState::EAS_Unoccupied;
 }
 
-void ASlashCharacter::HitReactEnd()
+void AQCharacter::HitReactEnd()
 {
 	ActionState = EActionState::EAS_Unoccupied;
 }
 
-bool ASlashCharacter::IsUnoccupied()
+bool AQCharacter::IsUnoccupied()
 {
 	return ActionState == EActionState::EAS_Unoccupied;
 }
 
-void ASlashCharacter::InitializeSlashOverlay()
+void AQCharacter::InitializeQOverlay()
 {
 	APlayerController* PlayerController = Cast<APlayerController>(GetController());
 	if (PlayerController)
 	{
-		ASlashHUD* SlashHUD = Cast<ASlashHUD>(PlayerController->GetHUD());
-		if (SlashHUD)
+		AQHUD* QHUD = Cast<AQHUD>(PlayerController->GetHUD());
+		if (QHUD)
 		{
-			SlashOverlay = SlashHUD->GetSlashOverlay();
-			if (SlashOverlay && Attributes)
+			QOverlay = QHUD->GetQOverlay();
+			if (QOverlay && Attributes)
 			{
-				SlashOverlay->SetHealthBarPercent(Attributes->GetHealthPercent());
-				SlashOverlay->SetStaminaBarPercent(1.f);
-				SlashOverlay->SetGold(0);
-				SlashOverlay->SetSouls(0);
+				QOverlay->SetHealthBarPercent(Attributes->GetHealthPercent());
+				QOverlay->SetStaminaBarPercent(1.f);
+				QOverlay->SetGold(0);
+				QOverlay->SetSouls(0);
 			}
 		}
 	}
 }
 
-void ASlashCharacter::SetHUDHealth()
+void AQCharacter::SetHUDHealth()
 {
-	if (SlashOverlay && Attributes)
+	if (QOverlay && Attributes)
 	{
-		SlashOverlay->SetHealthBarPercent(Attributes->GetHealthPercent());
+		QOverlay->SetHealthBarPercent(Attributes->GetHealthPercent());
 	}
 }
