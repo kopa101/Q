@@ -1,31 +1,31 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "QCharacterBase2.h"
+#include "QCharacterBase.h"
 
 
 // Sets default values
-AQCharacterBase2::AQCharacterBase2()
+AQCharacterBase::AQCharacterBase()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 }
 
 // Called when the game starts or when spawned
-void AQCharacterBase2::BeginPlay()
+void AQCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
 // Called every frame
-void AQCharacterBase2::Tick(float DeltaTime)
+void AQCharacterBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
 
 // Called to bind functionality to input
-void AQCharacterBase2::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void AQCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }

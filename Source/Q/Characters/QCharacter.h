@@ -3,17 +3,17 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
-#include "QCharacterBase2.generated.h"
+#include "QCharacterBase.h"
+#include "QCharacter.generated.h"
 
 UCLASS()
-class Q_API AQCharacterBase2 : public ACharacter
+class Q_API AQCharacter : public AQCharacterBase
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
-	AQCharacterBase2();
+	AQCharacter();
 
 protected:
 	// Called when the game starts or when spawned

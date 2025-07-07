@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "QCharacterBase1.generated.h"
+#include "QCharacterBase.generated.h"
 
 UCLASS()
-class Q_API AQCharacterBase1 : public ACharacter
+class Q_API AQCharacterBase : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
-	AQCharacterBase1();
+	AQCharacterBase();
 
 protected:
 	// Called when the game starts or when spawned
